@@ -1,5 +1,5 @@
-typedef int bqsize;
-
+typedef long int bqsize;
+/*
 class BQString {
 private:
 	char* m_string;
@@ -7,6 +7,7 @@ private:
 
 public:
 	BQString(const char* s);
+	BQString();
 	~BQString();
 
 	static bqsize GetCStrLen(const char* s);
@@ -14,7 +15,7 @@ public:
 	static void CopyNoAlloc(char* dest, const char* src);
 	static void CopyNoAlloc(char* dest, const char* src, bqsize len);
 
-	static void CopyWitAlloc(char* dest, const char* src);
+	static void CopyWihtAlloc(char* dest, const char* src);
 	static void CopyWithAlloc(char* dest, const char* src, bqsize len);
 
 //#define DEFAULT_VERIFY_LENGTH 100
@@ -30,4 +31,4 @@ public:
 	
 	
 
-}
+}*/

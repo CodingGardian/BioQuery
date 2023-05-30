@@ -13,7 +13,8 @@ public:
 
 private:
 	DBType m_dbtype;
-	
+	// (reference or pointer to) RequestMapper for DB
+
 public:
 	I_DBDescriptor();
 	~I_DBDescriptor();
