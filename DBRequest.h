@@ -8,7 +8,6 @@
 // 
 class DBContext {
 private:
-	// make this a class!!!
 	void* DBBuffer; // all of the data that is sent to server from DB on connection (yeah but how much???)
 public: 
 	DBContext(void* buffer);
@@ -19,12 +18,12 @@ public:
 
 	virtual DBContext& operator=(DBContext&& context);
 
-	
+
 };
 
 class I_DBCommand {
 private:
-	
+
 public:
 
 	virtual char RunCommand(); // making char because might need error codes
