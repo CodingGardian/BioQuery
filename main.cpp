@@ -22,6 +22,7 @@ I know that code needs to be clean but functional programming would be so much s
 Just use the function and 
 
 */
+#include <iostream>
 
 int main() {
   std::cout << "Hello World!\n";
