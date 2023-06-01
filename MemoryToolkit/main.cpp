@@ -18,6 +18,7 @@ struct MemoryPoolTest {
 	float y[20];
 };
 
+// yeahhhhhhhhhh boi >:)
 
 int oldmain() {
 	using namespace CEGUI::MEMORY;
