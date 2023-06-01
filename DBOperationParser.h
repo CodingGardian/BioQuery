@@ -3,8 +3,6 @@
 
 class DBOperation;
 
-#define ADD_OPERATIONPARSER(classname) OperationParserCreateFn_T<classname
-
 // way to define format for each specific for an operation (client and server side)
 class I_DBOperationParser {
 private:
@@ -18,8 +16,8 @@ public:
 
 	virtual DBOperation ParseBuffer(char*);
 };
-typedef I_DBOperationParser* (*OperationParserCreateFn)(void);
-template<typename T> I_DBOperationParser* OperationParserCreateFn_T();
+
+I_DBOperationParser* GetDBOperationParser(const char* opstr); // input operation in here and get a parser
 
 // just an example
 class DBSearchOperationParser : public I_DBOperationParser {
@@ -31,7 +29,6 @@ public:
 
 	DBOperation ParseBuffer(char*) override;
 };
-I_DBOperationParser* CreateSearchOperationParser();
 
 
 // char -> ptr (proper operation parser)

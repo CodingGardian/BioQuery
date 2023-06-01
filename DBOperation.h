@@ -7,13 +7,9 @@ private:
 	// fields and commands
 
 public:
-	DBOperation();
+	RULEOFTHREE(DBOperation)
+
 	~DBOperation();
-
-
-	DBOperation(const DBOperation& o);
-	DBOperation operator=(const DBOperation& o);
-
 	
 };
 
