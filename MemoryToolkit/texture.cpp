@@ -21,7 +21,7 @@
 
 using namespace CEGUI::MEMORY::TEXTURE;
 
-using CEGUI::MEMORY::unknown;
+//using CEGUI::MEMORY::unknown;
 
 /*char* texture_buffer;
 int total_texture_size; // total bytes
@@ -77,11 +77,11 @@ MTextureBuffer::MTextureBuffer(const char* name, short num_headers, int texture_
     strncpy(s1, stemp.c_str(), stemp.length()+1);
     strncpy(s2, stemp2.c_str(), stemp2.length()+1);
     
-    memspan m1 = { (unknown)m_start, (unknown)(m_start + m_sizeHeaderBuffer*sizeof(TextureNode)) };
-    memspan m2 = { (unknown)m_texture_buffer, (unknown)(m_texture_buffer + m_total_texture_size) };
+    //memspan m1 = { (unknown)m_start, (unknown)(m_start + m_sizeHeaderBuffer*sizeof(TextureNode)) };
+   // memspan m2 = { (unknown)m_texture_buffer, (unknown)(m_texture_buffer + m_total_texture_size) };
 		
-    m_header_toolkit = GetMemToolkit(s1,  m1);
-    m_texture_toolkit = GetMemToolkit(s2,  m2);
+    //m_header_toolkit = GetMemToolkit(s1,  m1);
+    //m_texture_toolkit = GetMemToolkit(s2,  m2);
 
 	m_allocatedHeaders = 0;
 	

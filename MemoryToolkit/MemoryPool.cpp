@@ -1,4 +1,5 @@
 #include "MemoryPool.h"
+#include "MemoryAllocator.h"
 #include <iostream>
 
 #define MINNEWBLOCK sizeof(header) + 4
@@ -9,7 +10,7 @@
 // NEVER GET header->freebefore->next or header->freebefore->before UNLESS YOU ARE SURE THAT IT IS NOT NULL
 
 
-CEGUI::MEMORY::MemoryPool::MemoryPool(int bytes) {
+MEMORY::SmartMemoryPool::SmartMemoryPool(I_MemoryBlock* block) {
 	/*m_ptrStart = new char[bytes];
 	header* tempheader = (header*)m_ptrStart;
 	tempheader->next = tempheader;
@@ -25,7 +26,7 @@ CEGUI::MEMORY::MemoryPool::MemoryPool(int bytes) {
 	tempheader->freebefore = nullptr;
 	
 	m_numEntries = 1;
-	m_size = bytes;*/
+	m_size = bytes;
 	bytes = (bytes + 7) & ~7;
 	std::cout << bytes << '\n';
 	m_ptrStart = new char[bytes];
@@ -45,20 +46,31 @@ CEGUI::MEMORY::MemoryPool::MemoryPool(int bytes) {
 	
 	m_numEntries = 1;
 	m_size = bytes;
+	*/
+}
+
+MEMORY::SmartMemoryPool::~SmartMemoryPool() {
+	//delete[] m_ptrStart;
+}
+
+template <typename T>
+MEMORY::I_MemoryBlock* MEMORY::SmartMemoryPool::specific_allocate(int bytes) {
+	bytes += sizeof(T);
+	T* uncast_allocator = new T;
+	I_MemoryAllocator* allocator;
+	if (!(allocator = dynamic_cast<I_MemoryAllocator*>(uncast_allocator))) {
+		// passed unknown type
+		return nullptr;
+	}
+
 	
 }
 
-CEGUI::MEMORY::MemoryPool::~MemoryPool() {
-	delete[] m_ptrStart;
-}
-
 // ASSUMPTION 1: THERE WILL NEVER BE TWO OR MORE ADJACENT FREE BLOCKS
-void* CEGUI::MEMORY::MemoryPool::allocate(int bytes) {
+MEMORY::I_MemoryBlock* MEMORY::SmartMemoryPool::allocate(int bytes) {
 	/*header* prev, *current;
 	current = m_ptrFreeMemoryList;
 	prev = m_ptrFreeMemoryListTail;
-
-	bytes = (bytes + 7) & ~7; // multiple of 8 (for byte alignment)
 		
 	do {
 		if (current->size >= bytes) {
@@ -109,7 +121,7 @@ void* CEGUI::MEMORY::MemoryPool::allocate(int bytes) {
 	current->frebefore = prev;
 	
 	return (void*)(current+1);*/
-	bytes = (bytes + 7) & ~7;
+	/*
 	header* temp = m_ptrStartLook;
 
 	do {
@@ -140,14 +152,18 @@ void* CEGUI::MEMORY::MemoryPool::allocate(int bytes) {
 	temp->size = bytes;
 	temp->id = FILLEDBLOCK;
 
-	return (void*)(temp+1);
+	return (void*)(temp+1);*/
+
+	// do some stuff
+
+	// return specific_allocate<proper allocator>(bytes);
 	
 }
 
 
 // ASSUMPTION 1: THERE WILL NEVER BE TWO OR MORE ADJACENT FREE BLOCKS
 // #1 RULE: NEVER LEAVE TWO FREE BLOCKS NEXT TO EACHOTHER, ALWAYS COMBINE THEM!!!!
-void CEGUI::MEMORY::MemoryPool::deallocate(void* ptr) {
+void MEMORY::SmartMemoryPool::deallocate(I_MemoryBlock* block) {
 	/*header* ptrheader = (header*)(ptr) - 1;
 
 	// TODO: FINSIH AND MAKE PRETTY AND SMALL :)
@@ -207,7 +223,7 @@ void CEGUI::MEMORY::MemoryPool::deallocate(void* ptr) {
 	
 	*/
 
-	header* ptrheader = (header*)ptr - 1;
+	/*header* ptrheader = (header*)ptr - 1;
 	if (ptrheader->id) {std::cout << "TRIED TO DOUBLE FREE BLOCK, EXITIING"; return;}
 	
 	if (ptrheader->before->id) {
@@ -231,12 +247,14 @@ void CEGUI::MEMORY::MemoryPool::deallocate(void* ptr) {
 	
 	}
 
-	ptrheader->id = FREEBLOCK;
+	ptrheader->id = FREEBLOCK;*/
+
+	// just clean up stuff with headers, MemoryBlock & MemoryAllocator will take care of their own stuff
 	
 }
 
 // ASSUMPTION 1: THERE WILL NEVER BE TWO OR MORE ADJACENT FREE BLOCKS
-void CEGUI::MEMORY::MemoryPool::PrintMemory() {
+void MEMORY::SmartMemoryPool::PrintMemory() {
 	header* temp = (header*)m_ptrStart;
 	std::cout << "\n";
 	do {
@@ -247,7 +265,7 @@ void CEGUI::MEMORY::MemoryPool::PrintMemory() {
 	
 }
 
-void CEGUI::MEMORY::MemoryPool::CheckMemory() {
+void MEMORY::SmartMemoryPool::CheckMemory() {
 	header* temp = (header*)m_ptrStart;
 	std::cout << "\n";
 	while (temp->next != (header*)m_ptrStart) {

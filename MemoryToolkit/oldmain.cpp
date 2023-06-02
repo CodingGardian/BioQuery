@@ -12,7 +12,7 @@
 #ifdef WIN32
 //#include "WinAPIComponent.h"
 #endif
-
+/*
 struct MemoryPoolTest {
 	int x[10];
 	float y[20];
@@ -24,9 +24,9 @@ int oldmain() {
 	using namespace CEGUI::MEMORY;
 
 	using std::chrono::high_resolution_clock;
-  using std::chrono::duration_cast;
-  using std::chrono::duration;
-  using std::chrono::milliseconds;
+	using std::chrono::duration_cast;
+	using std::chrono::duration;
+	using std::chrono::milliseconds;
 
 	MemoryPool p(312);
 
@@ -53,7 +53,7 @@ int oldmain() {
 	std::cout << "allocate with malloc time: " << malloctime.count() << "\n";
 
 	std::cout << "allocate with pool time: " << poolalloctime.count() << "\n";
-	*/
+	
 	
 	MemoryPoolTest* test1 = (MemoryPoolTest*)p.allocate(sizeof(MemoryPoolTest));
 	MemoryPoolTest* test2 = (MemoryPoolTest*)p.allocate(sizeof(MemoryPoolTest));
@@ -99,8 +99,8 @@ int oldmain() {
 		std::cout << '\n' << std::endl;
     temp_texture.GetHeaderToolkit().dump();
 		temp_texture.GetTextureToolkit().dump();
-		std::cout << "\n";*/
+		std::cout << "\n";
 
 		
 	return 0;
-}
+}*/
